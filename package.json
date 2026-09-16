@@ -1,6 +1,6 @@
 {
   "name": "profitleak-ai",
-  "version": "1.23.0",
+  "version": "1.24.0",
   "private": true,
   "description": "SaaS MVP that shows online sellers their TRUE product profit after all costs (ads, shipping, fees, discounts, returns) and where they're leaking money. FREE + PRO plans.",
   "scripts": {

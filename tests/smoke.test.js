@@ -257,9 +257,9 @@ async function main() {
 
   w.location.hash = '#/pricing';
   await tick();
-  test('pricing page renders FREE $0 and PRO $19 one-time', () => {
+  test('pricing page renders FREE $0 and PRO $19.99 / year', () => {
     const t = d.querySelector('#pricing-body').textContent;
-    assert.ok(t.includes('$0') && t.includes('$19') && t.includes('one-time'));
+    assert.ok(t.includes('$0') && t.includes('$19.99') && t.includes('/ year'));
   });
   test('pricing cards show the right tags and ribbon', () => {
     const t = d.querySelector('#pricing-body').textContent;
@@ -271,14 +271,14 @@ async function main() {
     ['Unlimited products', 'What-if simulator', 'Cost ranking', 'Advanced profit diagnosis',
      'Amazon', 'eBay', 'Shopify'].forEach(f => assert.ok(t.includes(f), f));
   });
-  test('trust line: no payment required today', () =>
-    assert.ok(d.querySelector('.pricing-trust').textContent.includes('One-time payment')));
+  test('trust line: instant activation, no codes, on-site payments', () =>
+    assert.ok(d.querySelector('.pricing-trust').textContent.includes('Instant activation')));
 
-  /* store is LIVE (v1.8.1): the PRO card links to Gumroad + a license box */
-  test('PRO card links to the live Gumroad store', () => {
-    const link = d.querySelector('#pricing-body a[href*="gumroad.com/l/ecommerce-profit-calculator"]');
-    assert.ok(link, 'buy link present');
-    assert.ok(link.textContent.includes('$19'));
+  /* v1.24: the PRO card sells subscriptions ON-SITE (never Gumroad) */
+  test('PRO card sells subscriptions inside the site', () => {
+    const link = d.querySelector('#pricing-body a[href*="checkout-start?method=paypal&plan=yearly"]');
+    assert.ok(link, 'on-site subscribe link present');
+    assert.ok(!d.querySelector('#pricing-body a[href*="gumroad.com"]'), 'no Gumroad redirect');
     assert.equal(link.getAttribute('target'), '_blank');
   });
   test('license activation box is shown to free users', () => {
@@ -298,8 +298,8 @@ async function main() {
     assert.ok(saved === 'pro' || saved === null);
   });
   test('unlicensed plan flag still shows the Buy Pro button (preview era ended)', () => {
-    assert.ok(d.querySelector('#pricing-body a[href*="gumroad.com/l/ecommerce-profit-calculator"]'),
-      'buy link present');
+    assert.ok(d.querySelector('#pricing-body a[href*="checkout-start?method="]'),
+      'on-site subscribe link present');
     assert.ok(!d.querySelector('[data-action="deactivate-preview"]'));
   });
 

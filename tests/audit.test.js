@@ -670,8 +670,9 @@ test('FREE LIMIT: 4th product blocked with upsell panel', () => {
 
 /* ---- upgrade to Pro ---- */
 w.location.hash = '#/pricing'; await tick(60);
-test('WIRED STORE: Gumroad buy link + license box shown', () => {
-  assert.ok(d.querySelector('#pricing-body a[href*="gumroad.com/l/ecommerce-profit-calculator"]'));
+test('WIRED STORE: on-site subscribe link + license box shown', () => {
+  assert.ok(d.querySelector('#pricing-body a[href*="checkout-start?method=paypal"]'));
+  assert.ok(!d.querySelector('#pricing-body a[href*="gumroad.com"]'));
   assert.ok(d.getElementById('license-input'));
 });
 w.PL_PLAN.setPlan('pro'); // simulate licensed Pro (app API, storage-independent)

@@ -31,7 +31,7 @@
     "@type": "Offer",
     "price": "0",
     "priceCurrency": "USD",
-    "description": "Free to try \u2014 one full session with complete diagnosis. Pro: $19 one-time, lifetime license."
+    "description": "Free to try \u2014 one full session with complete diagnosis. Pro: from $3.99/month or $19.99/year \u2014 instant activation, no auto-charge."
   }
 }
 </script>
@@ -2335,6 +2335,85 @@ th.num, td.num { text-align: right; }
 .freeyear-box { margin-bottom: 16px; padding: 12px 14px; border: 1.5px dashed #16a34a;
   border-radius: 12px; background: rgba(22,163,74,.08); font-size: 14px; line-height: 1.6; }
 
+/* ═══════════════════════════════════════════════════════════════
+   v1.24 — professional trust polish
+   (hero trust chips · trust bar · FAQ · footer grid · pay chips)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ---- hero trust chips ---- */
+.hero-trust { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 28px; }
+.trust-chip {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 7px 14px; border-radius: 999px;
+  font-size: 13px; font-weight: 600; letter-spacing: .01em;
+  color: #c7d2fe; background: rgba(99, 102, 241, .14);
+  border: 1px solid rgba(129, 140, 248, .38);
+}
+.trust-chip svg { flex: 0 0 auto; color: #a5b4fc; }
+
+/* ---- trust bar (under the hero) ---- */
+.trust-bar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 34px 24px; }
+.trust-bar-inner { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+.trust-item { display: flex; gap: 13px; align-items: flex-start; }
+.trust-ico { font-size: 20px; line-height: 1.35; }
+.trust-item strong { display: block; font-size: 14.5px; color: var(--ink); margin-bottom: 3px; }
+.trust-item span { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+/* ---- FAQ ---- */
+.faq { background: var(--bg); padding: 76px 24px; }
+.faq-list { max-width: 760px; margin: 0 auto; display: grid; gap: 12px; }
+.faq-item {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; overflow: hidden;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.faq-item[open] { border-color: #c7d2fe; box-shadow: 0 10px 30px rgba(79, 70, 229, .08); }
+.faq-item summary {
+  list-style: none; cursor: pointer; display: flex;
+  justify-content: space-between; align-items: center; gap: 14px;
+  padding: 17px 20px; font-weight: 700; font-size: 15.5px; color: var(--ink);
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary .faq-chev { flex: 0 0 auto; color: #6366f1; transition: transform .2s ease; }
+.faq-item[open] summary .faq-chev { transform: rotate(180deg); }
+.faq-a { padding: 0 20px 18px; color: var(--text-muted); font-size: 14.5px; line-height: 1.65; }
+.faq-a p + p { margin-top: 8px; }
+
+/* ---- payment chips (pricing + paywall) ---- */
+.pay-chips { display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; margin: 14px 0 4px; }
+.pay-chips span {
+  font-size: 11.5px; font-weight: 700; letter-spacing: .03em;
+  color: #475569; background: #f1f5f9; border: 1px solid #e2e8f0;
+  border-radius: 7px; padding: 4px 10px;
+}
+.price-note a { color: #4f46e5; font-weight: 700; }
+
+/* ---- footer ---- */
+.site-footer { padding: 0; }
+.footer-grid {
+  max-width: 1080px; margin: 0 auto; padding: 44px 24px 30px;
+  display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 30px; text-align: left;
+}
+.footer-brand { display: flex; gap: 12px; align-items: flex-start; }
+.footer-brand strong { font-size: 16px; color: var(--ink); }
+.footer-brand p { margin-top: 5px; font-size: 13px; line-height: 1.55; color: var(--text-muted); max-width: 250px; }
+.footer-col h4 { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); margin-bottom: 11px; }
+.footer-col a, .footer-col span { display: block; font-size: 13.5px; color: var(--text-muted); margin-bottom: 8px; text-decoration: none; }
+.footer-col a:hover { color: #4f46e5; text-decoration: underline; }
+.site-footer .muted { padding: 0 24px; }
+.footer-copy { border-top: 1px solid var(--border); padding: 16px 24px 22px !important; font-size: 12.5px; }
+
+@media (max-width: 900px) {
+  .trust-bar-inner { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .trust-bar-inner { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+  .hero-trust { gap: 7px; }
+  .trust-chip { font-size: 12px; padding: 6px 11px; }
+}
+
 </style>
 </head>
 <body>
@@ -2381,10 +2460,38 @@ th.num, td.num { text-align: right; }
         </a>
       </div>
 
+      <div class="hero-trust" aria-label="Why sellers trust ProfitLeak AI">
+        <span class="trust-chip"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>No card needed</span>
+        <span class="trust-chip"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>First session free</span>
+        <span class="trust-chip"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Instant activation</span>
+        <span class="trust-chip"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Data stays in your browser</span>
+      </div>
+
       <!-- Real example, computed live by the app's own engine -->
       <div class="hero-example" id="hero-example"></div>
     </div>
   </header>
+
+  <section class="trust-bar" aria-label="Why sellers trust ProfitLeak AI">
+    <div class="trust-bar-inner">
+      <div class="trust-item">
+        <span class="trust-ico" aria-hidden="true">&#128274;</span>
+        <div><strong>Private by design</strong><span>Your numbers never leave your browser. No account, no tracking.</span></div>
+      </div>
+      <div class="trust-item">
+        <span class="trust-ico" aria-hidden="true">&#9889;</span>
+        <div><strong>Instant activation</strong><span>Pay and keep working &mdash; no license codes, no waiting.</span></div>
+      </div>
+      <div class="trust-item">
+        <span class="trust-ico" aria-hidden="true">&#128179;</span>
+        <div><strong>Secure checkout</strong><span>PayPal &middot; Visa &middot; Mastercard &middot; BTC &amp; 100+ cryptos.</span></div>
+      </div>
+      <div class="trust-item">
+        <span class="trust-ico" aria-hidden="true">&#127757;</span>
+        <div><strong>Any marketplace</strong><span>Shopify, Amazon, eBay, COD, Instagram &mdash; any store, any country.</span></div>
+      </div>
+    </div>
+  </section>
 
   <section class="benefits">
     <div class="section-head">
@@ -2444,6 +2551,35 @@ th.num, td.num { text-align: right; }
     </div>
   </section>
 
+  <section class="faq">
+    <div class="section-head">
+      <h2>Questions sellers ask</h2>
+      <p>Straight answers &mdash; no small print.</p>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>Is it really free to try?<svg class="faq-chev" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <div class="faq-a"><p>Yes. Your first session is completely free and fully functional &mdash; add up to 3 products, see your true profit and get your full diagnosis. No card, no signup.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>How does Pro pricing work?<svg class="faq-chev" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <div class="faq-a"><p>Pro is $3.99/month or $19.99/year (two months free). You pay once per period &mdash; there is no automatic charge. To cancel, simply don&rsquo;t renew.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>How do I pay, and how fast do I get Pro?<svg class="faq-chev" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <div class="faq-a"><p>Right here on the site: PayPal, Visa/Mastercard (via PayPal &mdash; no PayPal account needed) or crypto (BTC, USDT, ETH &amp; 100+). Pro activates in your browser the second your payment completes &mdash; no codes to paste, nothing to wait for.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>Is my data safe?<svg class="faq-chev" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <div class="faq-a"><p>Your products and numbers are stored only in your own browser &mdash; never on our servers. There is no account to hack and nothing to leak.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>What exactly do I get with Pro?<svg class="faq-chev" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <div class="faq-a"><p>Unlimited products, the What-If Simulator (test any change safely), cost ranking, profit goal planner, advanced recommendations, PDF report export and CSV import/export &mdash; plus priority support.</p></div>
+      </details>
+    </div>
+  </section>
+
   <section class="cta-band">
     <h2>Ready to find your profit leaks?</h2>
     <p>Analyzing your first product takes about 30 seconds.</p>
@@ -2451,8 +2587,35 @@ th.num, td.num { text-align: right; }
   </section>
 
   <footer class="site-footer">
-    <p><strong>ProfitLeak AI</strong> · MVP v1 · Your data never leaves your browser.</p>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <svg class="brand-mark" viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><rect width="24" height="24" rx="7" fill="url(#plg)"/><path d="M12 5.2l4.7 4.7a6.65 6.65 0 1 1-9.4 0z" fill="#fff"/></svg>
+        <div>
+          <strong>ProfitLeak&nbsp;AI</strong>
+          <p>The true-profit calculator for online sellers. Every cost counted, every leak found.</p>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="#/dashboard">Start free</a>
+        <a href="#/pricing">Pricing</a>
+        <a href="#/">How it works</a>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <a href="https://wa.me/212653198886" target="_blank" rel="noopener">WhatsApp +212 653 19 88 86</a>
+        <span>Replies within 24 hours</span>
+        <span>@ProfitLeakAI</span>
+      </div>
+      <div class="footer-col">
+        <h4>Payments</h4>
+        <span>PayPal &middot; Visa &middot; Mastercard</span>
+        <span>Crypto &mdash; BTC, USDT &amp; 100+</span>
+        <span>Instant activation &middot; No auto-charge</span>
+      </div>
+    </div>
     <p class="muted">Recommendations are generated from your own numbers. Thresholds are rules of thumb, not financial advice.</p>
+    <p class="footer-copy">&copy; 2026 ProfitLeak AI &mdash; your data never leaves your browser.</p>
   </footer>
 </div>
 
@@ -2701,10 +2864,10 @@ th.num, td.num { text-align: right; }
       <div class="report-toolbar">
         <a class="btn btn-ghost" href="#/dashboard">&#8592; Back to dashboard</a>
         <div class="report-toolbar-right">
-          <span class="report-hint">Opens the print dialog &mdash; choose &ldquo;Save as PDF&rdquo; to download</span>
+          <span class="report-hint">Pro &mdash; opens the print dialog, choose &ldquo;Save as PDF&rdquo; to download</span>
           <button class="btn btn-primary" id="report-print" type="button">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10V4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v6"/><path d="M7 15h10v6H7z"/></svg>
-            Download Report
+            Download Report &#128274;
           </button>
         </div>
       </div>
@@ -2779,13 +2942,13 @@ th.num, td.num { text-align: right; }
     <h2 id="trial-title">Your free session has ended</h2>
     <p class="trial-text" id="trial-text"></p>
     <div class="trial-actions">
-      <a class="btn btn-gold btn-lg" id="trial-buy" href="#" target="_blank" rel="noopener">Buy Pro &mdash; $19 one-time</a>
+      <a class="btn btn-gold btn-lg" id="trial-buy" href="#" target="_blank" rel="noopener">Go Pro &mdash; $19.99 / year</a>
       <div class="pay-opts">
-        <a id="trial-paypal" href="#" target="_blank" rel="noopener">PayPal &middot; Visa &middot; Mastercard</a>
+        <a id="trial-paypal" href="#" target="_blank" rel="noopener">Or monthly &mdash; $3.99</a>
         <a id="trial-crypto" href="#" target="_blank" rel="noopener">Crypto &mdash; BTC, USDT &amp; 100+</a>
       </div>
     </div>
-    <p class="trial-note">Instant email delivery &middot; Lifetime license &middot; Secure checkout by Gumroad</p>
+    <p class="trial-note">Instant activation after payment &middot; No license codes &middot; No auto-charge &mdash; cancel by not renewing</p>
     <div class="trial-license">
       <div class="license-title">Already bought? Activate your license</div>
       <div class="license-row">
@@ -5043,7 +5206,7 @@ th.num, td.num { text-align: right; }
           '<a class="btn btn-primary btn-lg" href="#/pricing">Upgrade to Pro</a>' +
           '<a class="btn btn-ghost" href="#/dashboard">Back to dashboard</a>' +
         '</div>' +
-        '<p class="upsell-note">Pro is $19 one-time \u2014 a lifetime license, no subscription.</p>';
+        '<p class="upsell-note">Pro is from $3.99/month \u2014 or $19.99/year. No auto-charge, cancel by not renewing.</p>';
       return;
     }
     layout.hidden = false;
@@ -5939,11 +6102,11 @@ th.num, td.num { text-align: right; }
       ['check', 'True profit calculator \u2014 every cost counted'],
       ['check', 'Basic profit diagnosis \u2014 biggest leak + action'],
       ['check', 'Dashboard, product table & status filters'],
-      ['check', 'CSV export & import'],
       ['check', 'Your data stays in your browser']
     ];
     var proFeats = [
       ['check', 'Unlimited products'],
+      ['check', 'PDF report export \u00B7 CSV import & export'],
       ['check', 'Advanced profit diagnosis'],
       ['check', 'What-if simulator \u2014 test any change safely'],
       ['check', 'Cost ranking \u2014 all six costs, biggest first'],
@@ -5978,20 +6141,21 @@ th.num, td.num { text-align: right; }
           '<button type="button" class="plan-opt" data-plan="monthly" role="tab">Monthly</button>' +
           '<button type="button" class="plan-opt active" data-plan="yearly" role="tab">Yearly <span class="plan-save">best value</span></button>' +
         '</div>' +
-        '<div class="plan-price" id="plan-price">$' + PLANS_CACHE.plans.yearly.price.toFixed(2) + ' / year</div>' +
         '<a class="btn btn-light btn-lg" data-pay="paypal" href="' + CHECKOUT + 'paypal&plan=yearly" target="_blank" rel="noopener">Subscribe \u2014 PayPal \u00B7 Visa \u00B7 Mastercard</a>' +
         '<a class="btn btn-ghost btn-lg" data-pay="crypto" href="' + CHECKOUT + 'crypto&plan=yearly" target="_blank" rel="noopener">Pay with Crypto \u2014 BTC, USDT &amp; 100+</a>' +
-        '<p class="price-note">No auto-charge \u2014 pay once per period, cancel by simply not renewing. Your data stays in your browser forever.</p>';
+        '<div class="pay-chips"><span>PayPal</span><span>Visa</span><span>Mastercard</span><span>BTC</span><span>USDT</span></div>' +
+        '<p class="price-note">Instant activation after payment \u2014 no codes. No auto-charge: pay once per period, cancel by not renewing. Your data stays in your browser forever.</p>';
     } else if (License && License.isConfigured()) {
-      proBtn = '<a class="btn btn-light btn-lg" href="' + esc(License.buyUrl()) + '" target="_blank" rel="noopener">Buy Pro \u2014 $19 one-time</a>' +
-        '<p class="price-note">Gumroad checkout \u00B7 license key delivered instantly by email</p>' +
-        '<div class="pay-opts">' +
-          '<a href="' + CHECKOUT + 'paypal" target="_blank" rel="noopener">PayPal \u00B7 Visa \u00B7 Mastercard</a>' +
-          '<a href="' + CHECKOUT + 'crypto" target="_blank" rel="noopener">Crypto \u2014 BTC, USDT &amp; 100+</a>' +
-        '</div>';
+      /* plans API unreachable (e.g. before the functions deploy) \u2014 on-site
+         checkout with the standard subscription prices, never Gumroad */
+      proBtn =
+        '<a class="btn btn-light btn-lg" data-pay="paypal" href="' + CHECKOUT + 'paypal&plan=yearly" target="_blank" rel="noopener">Subscribe \u2014 PayPal \u00B7 Visa \u00B7 Mastercard</a>' +
+        '<a class="btn btn-ghost btn-lg" data-pay="crypto" href="' + CHECKOUT + 'crypto&plan=yearly" target="_blank" rel="noopener">Pay with Crypto \u2014 BTC, USDT &amp; 100+</a>' +
+        '<p class="price-note">Prefer monthly? <a href="' + CHECKOUT + 'paypal&plan=monthly" target="_blank" rel="noopener">$3.99 / month</a> \u2014 same Pro features.<br>Instant activation after payment \u2014 no codes. No auto-charge: cancel by not renewing.</p>' +
+        '<div class="pay-chips"><span>PayPal</span><span>Visa</span><span>Mastercard</span><span>BTC</span><span>USDT</span></div>';
     } else {
-      proBtn = '<button type="button" class="btn btn-light btn-lg" data-action="upgrade">Upgrade to Pro \u2014 $19 one-time</button>' +
-        '<p class="price-note">One-time payment \u00B7 secure checkout via Gumroad</p>';
+      proBtn = '<button type="button" class="btn btn-light btn-lg" data-action="upgrade">Upgrade to Pro \u2014 from $3.99</button>' +
+        '<p class="price-note">Monthly or yearly \u00B7 instant activation \u00B7 secure checkout inside the site</p>';
     }
 
     /* activate-a-license box (only once the store is connected) */
@@ -6019,14 +6183,14 @@ th.num, td.num { text-align: right; }
         '<div class="price-card price-card-pro">' +
           '<div class="price-ribbon">Most popular</div>' +
           '<div class="price-name">PRO</div>' +
-          '<div class="price-value">$19<small> one-time</small></div>' +
+          '<div class="price-value" id="plan-price">$19.99<small> / year</small></div>' +
           '<p class="price-tag">For serious online sellers</p>' +
           featList(proFeats) +
           '<div class="price-actions">' + proBtn + '</div>' +
           licenseBox +
         '</div>' +
       '</div>' +
-      '<p class="pricing-trust">One-time payment \u00B7 Card, PayPal &amp; crypto on site \u00B7 Refunds via Gumroad \u00B7 Your data never leaves your browser</p>';
+      '<p class="pricing-trust">Instant activation \u2014 no license codes \u00B7 Card, PayPal &amp; crypto, all inside the site \u00B7 No auto-charge \u00B7 Your data never leaves your browser</p>';
   }
 
   /* ---------- paid license activation (v1.8) ---------- */
@@ -6076,9 +6240,9 @@ th.num, td.num { text-align: right; }
     var ov = $('#trial-overlay');
     if (!ov) return;
     var buy = $('#trial-buy');
-    if (buy && License && License.buyUrl) buy.href = License.buyUrl();
+    if (buy) buy.href = CHECKOUT + 'paypal&plan=yearly';
     var ppo = $('#trial-paypal'), cpo = $('#trial-crypto');
-    if (ppo) ppo.href = CHECKOUT + 'paypal&plan=yearly';
+    if (ppo) ppo.href = CHECKOUT + 'paypal&plan=monthly';
     if (cpo) cpo.href = CHECKOUT + 'crypto&plan=yearly';
     var n = state.products.length;
     /* v1.16: once the visitor has used their email bonus, the popup is buy-only */
@@ -6089,11 +6253,11 @@ th.num, td.num { text-align: right; }
       ? (n > 0
           ? 'You have used your free session and your 2 bonus sessions. Your ' + n +
             (n === 1 ? ' product' : ' products') + ' and every calculation are saved in this browser \u2014 ready the moment you activate Pro.'
-          : 'You have used your free session and your 2 bonus sessions. Activate Pro to keep analyzing your true profit \u2014 every feature, unlimited products, lifetime license.')
+          : 'You have used your free session and your 2 bonus sessions. Activate Pro to keep analyzing your true profit \u2014 every feature, unlimited products \u2014 from $3.99/month.')
       : (n > 0
           ? 'You explored ProfitLeak AI with your free session. Your ' + n +
             (n === 1 ? ' product' : ' products') + ' and every calculation are saved in this browser \u2014 ready the moment you activate Pro.'
-          : 'You explored ProfitLeak AI with your free session. Activate Pro to keep analyzing your true profit \u2014 every feature, unlimited products, lifetime license.');
+          : 'You explored ProfitLeak AI with your free session. Activate Pro to keep analyzing your true profit \u2014 every feature, unlimited products \u2014 from $3.99/month.');
     ov.hidden = false;
     document.body.classList.add('modal-open');
     var wo = $('#welcome-overlay');
@@ -6768,8 +6932,8 @@ th.num, td.num { text-align: right; }
     if (Plan.isPro()) return true;
     confirmDialog({
       title: featureName + ' is a Pro feature \uD83D\uDD12',
-      message: 'Exporting, importing and printing your data is part of Pro. Everything you create in your free session stays saved in this browser \u2014 upgrade to move your data in and out, forever.',
-      confirmText: 'Upgrade to Pro \u2014 $19',
+      message: 'PDF report export and CSV import/export are part of Pro. Everything you create in your free session stays saved in this browser \u2014 upgrade to move your reports and product files in and out, forever.',
+      confirmText: 'Upgrade \u2014 from $3.99/month',
       cancelText: 'Not now'
     }).then(function (ok) {
       if (ok) location.hash = '#/pricing';
@@ -6779,16 +6943,15 @@ th.num, td.num { text-align: right; }
 
   function showProComingSoon() {
     confirmDialog({
-      title: 'Get Pro \u2014 $19 one-time \uD83D\uDE80',
-      message: 'Pro includes unlimited products, the What-If Simulator, cost ranking, profit goals and marketplace integrations. Pay with card, PayPal or crypto right here \u2014 or via Gumroad. Your license key activates on this Pricing page.',
-      confirmText: 'Continue to checkout',
+      title: 'Go Pro \u2014 inside the app \uD83D\uDE80',
+      message: 'Pro unlocks unlimited products, the What-If Simulator, cost ranking, profit goals, PDF report export and CSV import/export. Pay securely inside the site \u2014 PayPal, card or crypto \u2014 and Pro activates instantly in this browser. From $3.99/month or $19.99/year, no auto-charge.',
+      confirmText: 'See Pro plans',
       cancelText: 'Not now'
     }).then(function (ok) {
-      if (!ok) return;
-      var url = License && License.buyUrl ? License.buyUrl() : '';
-      if (url) window.open(url, '_blank', 'noopener');
+      if (ok) location.hash = '#/pricing';
     });
   }
+
 
   /* =============================================================
      PROFIT REPORT

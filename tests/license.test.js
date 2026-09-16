@@ -228,11 +228,12 @@ async function main() {
     assert.ok(d.getElementById('license-activate-btn'));
     assert.ok(d.getElementById('license-activate-btn').textContent.includes('Activate'));
   });
-  test('PRO card now links to the Gumroad buy page ($19 one-time)', () => {
-    const link = d.querySelector('#pricing-body a[href^="https://teststore.example"]');
+  test('PRO card sells subscriptions on-site (no Gumroad redirect)', () => {
+    const link = d.querySelector('#pricing-body a[href*="checkout-start?method=paypal&plan=yearly"]');
     assert.ok(link);
-    assert.ok(link.textContent.includes('$19'));
     assert.equal(link.getAttribute('target'), '_blank');
+    assert.ok(!d.querySelector('#pricing-body a[href*="gumroad.com"]'));
+    assert.ok(d.querySelector('#pricing-body').textContent.includes('$19.99'));
   });
 
   // invalid key first
@@ -305,13 +306,13 @@ async function main() {
   test('store not connected yet: no license box, upgrade button still works', () => {
     assert.ok(!d3.getElementById('license-input'));
     upgradeBtn = d3.querySelector('[data-action="upgrade"]');
-    assert.ok(upgradeBtn && upgradeBtn.textContent.includes('$19'));
+    assert.ok(upgradeBtn && upgradeBtn.textContent.includes('$3.99'));
   });
   upgradeBtn.click();
   await tick(80);
   test('upgrade dialog points to checkout, no free preview offered', () => {
     assert.ok(!d3.querySelector('#modal-overlay').hidden);
-    assert.ok(d3.querySelector('#modal-overlay').textContent.includes('$19'));
+    assert.ok(d3.querySelector('#modal-overlay').textContent.includes('$3.99'));
     assert.ok(!d3.querySelector('#modal-overlay').textContent.includes('free preview'));
   });
   d3.getElementById('modal-confirm').click(); await tick(60);

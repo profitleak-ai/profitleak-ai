@@ -172,9 +172,11 @@ async function main() {
   /* ============ 7. WHAT-IF SIMULATOR ============ */
   console.log('\n\u2500\u2500 7. What-If Simulator \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500');
   await go('#/pricing');
-  test('PRO card links to the live Gumroad store ($19) + license box', () => {
-    const link = d.querySelector('#pricing-body a[href*="gumroad.com/l/ecommerce-profit-calculator"]');
-    assert.ok(link && link.textContent.includes('$19'));
+  test('PRO card sells subscriptions on-site + license box', () => {
+    const link = d.querySelector('#pricing-body a[href*="checkout-start?method=paypal&plan=yearly"]');
+    assert.ok(link);
+    assert.ok(d.querySelector('#pricing-body').textContent.includes('$19.99'));
+    assert.ok(!d.querySelector('#pricing-body a[href*="gumroad.com"]'));
     assert.ok(d.getElementById('license-input'));
   });
   w.PL_PLAN.setPlan('pro'); // simulate the preview for the simulator stage

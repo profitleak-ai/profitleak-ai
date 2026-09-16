@@ -159,10 +159,11 @@ async function main() {
   test('returning visitor: the paywall appears', () => {
     assert.ok(!d2.querySelector('#trial-overlay').hidden);
   });
-  test('paywall: buy button points to the live Gumroad store', () => {
+  test('paywall: buy button opens the on-site subscription checkout', () => {
     const buy = d2.querySelector('#trial-buy');
     assert.ok(buy);
-    assert.ok(buy.href.includes('gumroad.com/l/ecommerce-profit-calculator'));
+    assert.ok(buy.href.includes('checkout-start?method=paypal&plan=yearly'));
+    assert.ok(!buy.href.includes('gumroad.com'));
     assert.equal(buy.getAttribute('target'), '_blank');
   });
   test('paywall: license input + Activate present', () => {

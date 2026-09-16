@@ -127,10 +127,12 @@ async function main() {
   w.location.hash = '#/pricing'; await tick(90);
 
   test('pricing page shows the on-site payment options', () => {
-    const links = [...d.querySelectorAll('#pricing-body .pay-opts a')];
+    const links = [...d.querySelectorAll('#pricing-body a[data-pay]')];
     assert.equal(links.length, 2);
-    assert.ok(links[0].href.includes('checkout-start?method=paypal'));
-    assert.ok(links[1].href.includes('checkout-start?method=crypto'));
+    assert.ok(links[0].href.includes('checkout-start?method=paypal&plan=yearly'));
+    assert.ok(links[1].href.includes('checkout-start?method=crypto&plan=yearly'));
+    assert.ok(d.querySelector('#pricing-body a[href*="method=paypal&plan=monthly"]'), 'monthly option offered');
+    assert.ok(!d.querySelector('#pricing-body a[href*="gumroad.com"]'), 'no Gumroad redirect');
   });
 
   d.getElementById('license-input').value = SITE_KEY;
