@@ -1012,6 +1012,7 @@ test('SECURITY: network calls limited to the two license-verify endpoints (v1.10
       .split("fetch(VISIT_EP").join('VISIT-LOG')
       .split("fetch('https://abacus.jasoncameron.dev/hit/profitleak/all'").join('VISIT-COUNTER-ALL')
       .split("fetch('https://abacus.jasoncameron.dev/hit/profitleak/d-'").join('VISIT-COUNTER-DAY')
+      .split("fetch('https://ntfy.sh/'").join('NTFY-INTENT')
       .split("fetch(PLANS_EP").join('PLANS')
       .split("fetch(REDEEM_EP").join('REDEEM');
     ['fetch(', 'XMLHttpRequest', 'WebSocket', 'sendBeacon'].forEach(pat =>
@@ -1036,6 +1037,7 @@ test('SECURITY: the only outbound URLs in the source are the known allow-list (v
       .split('https://profitleak.netlify.app/.netlify/functions/store-manage').join('') // link edit/delete (v1.13)
       .split('https://profitleak.netlify.app/.netlify/functions/visit-log').join('') // visitor beacon (v1.22)
       .split('https://abacus.jasoncameron.dev').join('') // no-signup live visitor counter (v1.22 fallback)
+      .split('https://ntfy.sh').join('') // instant owner alerts: buy intent / sales (v1.25)
       .split('https://profitleak.netlify.app').join('') // our own site (public links, v1.12)
       .split('https://wa.me').join('') // WhatsApp deep link opens the seller's chat
       .split('http://www.w3.org').join('')
