@@ -7,23 +7,23 @@
 <title>ProfitLeak AI — See Your True Product Profit</title>
 <meta name="description" content="ProfitLeak AI reveals the hidden costs eating your product profits: advertising, shipping, fees, discounts and returns. See your TRUE profit on every product.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%234f46e5'/%3E%3Cpath d='M12 5l4.9 4.9a6.9 6.9 0 1 1-9.8 0z' fill='%23fff'/%3E%3C/svg%3E">
-<link rel="canonical" href="https://profitleak-ai.github.io/">
+<link rel="canonical" href="https://profitleakaii.qd.je/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ProfitLeak AI">
 <meta property="og:title" content="ProfitLeak AI — True Profit Calculator for E-commerce Sellers">
 <meta property="og:description" content="See your TRUE profit per product. All 6 costs tracked: COGS, ads, shipping, fees, discounts, returns. Instant diagnosis, PDF reports, zero signup.">
-<meta property="og:url" content="https://profitleak-ai.github.io/">
-<meta property="og:image" content="https://profitleak-ai.github.io/og-cover.png">
+<meta property="og:url" content="https://profitleakaii.qd.je/">
+<meta property="og:image" content="https://profitleakaii.qd.je/og-cover.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="ProfitLeak AI — True Profit Calculator for E-commerce Sellers">
 <meta name="twitter:description" content="See your TRUE profit per product. All 6 costs tracked. Instant diagnosis, zero signup.">
-<meta name="twitter:image" content="https://profitleak-ai.github.io/og-cover.png">
+<meta name="twitter:image" content="https://profitleakaii.qd.je/og-cover.png">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "name": "ProfitLeak AI",
-  "url": "https://profitleak-ai.github.io/",
+  "url": "https://profitleakaii.qd.je/",
   "applicationCategory": "BusinessApplication",
   "operatingSystem": "Any (web browser)",
   "description": "True profit calculator for e-commerce sellers. Tracks all 6 costs — product cost, ad spend, shipping, platform fees, discounts and returns — and diagnoses exactly which one is eating your margin.",
@@ -4882,6 +4882,23 @@ th.num, td.num { text-align: right; }
     } catch (e) { /* never block a click */ }
   }, true);
 
+  /* v1.26: buyers returning from checkout land with ?key=PLS-\u2026 in the URL
+     (cross-domain instant activation) \u2014 apply it silently, then clean the bar. */
+  function tryUrlKeyActivation() {
+    try {
+      var m = (location.search || '').match(/[?&]key=([A-Za-z0-9-]{8,60})/);
+      if (!m || !License || !License.activate) return;
+      var key = m[1];
+      try { history.replaceState(null, '', location.pathname + (location.hash || '')); } catch (e2) { /* ignore */ }
+      if (License.isActive && License.isActive()) return;
+      License.activate(key).then(function (r) {
+        try {
+          if (r && r.ok) { toast('Pro activated \u2014 thank you! \uD83C\uDF89'); render(); }
+        } catch (e3) { /* ignore */ }
+      }).catch(function () { /* bad key \u2014 the Pricing page still accepts pasting */ });
+    } catch (e) { /* never block boot */ }
+  }
+
   function render() {
     var route = parseRoute();
     var isLanding = route.page === 'landing';
@@ -7219,6 +7236,9 @@ th.num, td.num { text-align: right; }
 
     /* one-session free trial (v1.9) */
     if (Trial) Trial.evaluate();
+
+    /* v1.26: returning from checkout with ?key= \u2192 instant activation */
+    try { tryUrlKeyActivation(); } catch (e) { /* never block boot */ }
 
     /* WhatsApp orders (v1.12): new sales apply themselves on open */
     setTimeout(function () { try { waAutoSync(); } catch (e) { /* never block boot */ } }, 900);

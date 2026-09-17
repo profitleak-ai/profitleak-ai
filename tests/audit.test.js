@@ -1024,7 +1024,8 @@ test('SECURITY: the only outbound URLs in the source are the known allow-list (v
     const rest = f.text
       .split('https://api.gumroad.com').join('')
       .split('https://profitleakai.gumroad.com').join('') // our store (buy button)
-      .split('https://profitleak-ai.github.io').join('') // this site (SEO meta tags)
+      .split('https://profitleak-ai.github.io').join('') // old address (SEO meta)
+      .split('https://profitleakaii.qd.je').join('') // our custom domain (v1.26)
       .split('https://schema.org').join('') // JSON-LD context (a vocabulary name, not a fetched resource)
       .split('https://mohamedramli.gumroad.com').join('') // earlier listing (still sold)
       .split('https://profitleak.netlify.app/.netlify/functions/license-verify').join('') // our on-site license endpoint (v1.10)

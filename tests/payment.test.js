@@ -111,6 +111,51 @@ async function main() {
   });
   domAuto.window.close();
 
+  /* v1.26: cross-domain instant activation — returning with ?key= in the URL */
+  const domKey = new JSDOM(STANDALONE, {
+    runScripts: 'dangerously', pretendToBeVisual: true,
+    url: 'https://profitleak.example/?key=' + SITE_KEY.toLowerCase(),
+    virtualConsole: vc,
+    beforeParse(window) {
+      window.fetch = (url) => {
+        if (String(url).includes('license-verify')) {
+          return Promise.resolve({ ok: true, json: () => Promise.resolve({ success: true, product: 'profitleak-pro', email: 'site-checkout' }) });
+        }
+        return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve({ success: false }) });
+      };
+      window.localStorage.setItem('profitleak.trial.v1',
+        JSON.stringify({ startedAt: Date.now() - 7200e3, lastActive: Date.now() - 7200e3 }));
+    }
+  });
+  await tick(400);
+  const wKey = domKey.window, dKey = wKey.document;
+  test('v1.26 ?key= return: boots straight into Pro, URL cleaned, no pasting', () => {
+    assert.ok(dKey.querySelector('#plan-nav .pro-badge'));
+    assert.ok(String(wKey.location.search).indexOf('key=') === -1, 'URL cleaned');
+  });
+  domKey.window.close();
+
+  /* v1.26: checkout-start carries the buyer origin + campaign through PayPal */
+  let capturedBody = '';
+  const realFetch = global.fetch;
+  global.fetch = (u, opts) => {
+    capturedBody = String((opts && opts.body) || '');
+    return Promise.resolve({ ok: true, json: () => Promise.resolve({ links: [{ rel: 'approve', href: 'https://www.paypal.com/checkoutnow?token=T26' }] }) });
+  };
+  const checkoutStart = require('/home/user/netlify-functions/checkout-start.js');
+  const r302 = await checkoutStart.handler({
+    httpMethod: 'GET',
+    queryStringParameters: { method: 'paypal', plan: 'yearly', ref: 'tiktok' },
+    headers: { referer: 'https://profitleakaii.qd.je/#/pricing' }
+  });
+  global.fetch = realFetch;
+  test('checkout-start carries the buyer origin + campaign through PayPal (v1.26)', () => {
+    assert.equal(r302.statusCode, 302);
+    assert.ok(r302.headers.Location.includes('paypal.com'));
+    assert.ok(capturedBody.includes(encodeURIComponent('https://profitleakaii.qd.je')));
+    assert.ok(capturedBody.includes('ref=tiktok'));
+  });
+
   const dom = new JSDOM(STANDALONE, {
     runScripts: 'dangerously', pretendToBeVisual: true,
     url: 'https://profitleak.example/', virtualConsole: vc,
